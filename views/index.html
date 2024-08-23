@@ -1,25 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Issue Tracker</title>
-    <link rel="icon" type="image/png" href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/style.css">
+    <link
+      rel="shortcut icon"
+      href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link 
+      rel="stylesheet" 
+      href="/public/style.css"
+    />
   </head>
   <body>
-    <header>
-      <h1>
-        Issue Tracker
-      </h1>
-    </header>
-    <section style="margin: 0 50px;">
-      <h3>Example <code>GET</code> usage</h3>
-      <code>/api/issues/{project}</code><br>
-      <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br>
-      <h3>Example return</h3>
-      <pre>
+    <!-- Navbar with Title -->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+      <div class="container-fluid justify-content-center">
+        <h1 class="navbar-brand mb-0">Issue Tracker</h1>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+          <section>
+            <h3>Example <code>GET</code> usage</h3>
+            <code>/api/issues/{project}</code><br />
+            <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br />
+            <h3>Example return</h3>
+            <pre class="bg-dark text-light p-3 rounded">
 <code>[
   { 
     "_id": "5871dda29faedc3491ff93bb",
@@ -36,41 +57,83 @@
  ]
 </code>
 </pre>
-    </section>
-    <hr style='margin: 0 50px'>
-    <section id='testui' style='margin-left: 50px;'>
-      <h3>Examples</h3>
-      Go to <a href='/api/issues/apitest/'><code>/api/issues/apitest/</code></a>  project
-      <h2 style="text-align: left">API Tests</h2>
-      <h3>Submit issue on <i>apitest</i></h3>
-      <form id="testForm" class="border">
-        <input type="text" name="issue_title" placeholder="*Title" style="width: 100px" required=''><br>
-        <textarea type="text" name="issue_text" placeholder="*Text" style="width: 100px" required=''></textarea><br>
-        <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
-      <form id="testForm2" class="border">
-        <input type="text" name="_id" placeholder="*_id" style="width: 100px" required=''><br>
-        <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 100px"><br>
-        <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 100px"></textarea><br>
-        <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px"><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <label><input type="checkbox" name="open" value="false"> Check to close issue</label><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Delete issue on <i>apitest</i></h3>
-      <form id="testForm3" class="border">
-        <input type="text" name="_id" placeholder="_id" style="width: 100px" required=''><br>
-        <button type="submit">Delete Issue</button>
-      </form>
-      <code id='jsonResult'></code>
-    </section>
-    <hr style='margin: 50px; margin-top: 200px'>
-    <!-- Your web-app is https, so your scripts need to be too -->
+          </section>
+          
+        </div>
+        <div class="col-md-4 d-flex flex-column justify-content-between 
+          <section id="testui" class="update">
+            <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
+            <form id="testForm2" class="border p-3 rounded bg-secondary">
+              <div class="form-group">
+                <input type="text" name="_id" placeholder="*_id" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <input type="text" name="issue_title" placeholder="(opt)Title" class="form-control" />
+              </div>
+              <div class="form-group">
+                <textarea name="issue_text" placeholder="(opt)Text" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <input type="text" name="created_by" placeholder="(opt)Created by" class="form-control" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="assigned_to" placeholder="(opt)Assigned to" class="form-control" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="status_text" placeholder="(opt)Status text" class="form-control" />
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" name="open" value="false" class="form-check-input" />
+                <label class="form-check-label">Check to close issue</label>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Submit Issue</button>
+            </form>
+          </section>
+        </div>
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+          <section id="testui">
+            <h3>Submit issue on <i>apitest</i></h3>
+            <form id="testForm" class="border p-3 rounded bg-secondary">
+              <div class="form-group">
+                <input type="text" name="issue_title" placeholder="*Title" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <textarea name="issue_text" placeholder="*Text" class="form-control" required></textarea>
+              </div>
+              <div class="form-group">
+                <input type="text" name="created_by" placeholder="*Created by" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <input type="text" name="assigned_to" placeholder="(opt)Assigned to" class="form-control" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="status_text" placeholder="(opt)Status text" class="form-control" />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Submit Issue</button>
+            </form>
+          </section>
+          <section id="testui">
+            <h3>Delete issue on <i>apitest</i></h3>
+            <form id="testForm3" class="border p-3 rounded bg-secondary">
+              <div class="form-group">
+                <input type="text" name="_id" placeholder="*_id" class="form-control" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Delete Issue</button>
+            </form>
+          </section>
+        </div>
+        <code id="jsonResult" class="bg-dark text-light p-3 rounded"></code>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4">
+      <p>
+        Quiz by <a href="https://www.freecodecamp.org/">freeCodeCamp</a><br />
+        Coded by <a href="https://github.com/agmt92">agmt92</a>
+      </p>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
@@ -110,6 +173,6 @@
           e.preventDefault();
         });
       });
-   </script>
+    </script>
   </body>
 </html>

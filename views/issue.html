@@ -1,106 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Issue Tracker - Project Page</title>
-    <link rel="icon" type="image/png" href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/style.css">
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/style.css" />
   </head>
-  <body>
-    <header>
-      <h1 id='projectTitle'></h1>
-    </header>
-    <center>
-      <div id='submitNewIssue'>
-        <br>
-        <h3>Submit a new issue:</h3>
-        <form id="newIssue" method="post" action="/api/">
-          <input type="text" name="issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
-          <textarea type="text" name="issue_text" placeholder="*Text" style="width: 320px; height: 100px;" required=''></textarea><br>
-          <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''>
-          <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
-          <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-          <button type="submit">Submit Issue</button>
-        </form>
-      </div>
-      
-      <div id='issueDisplay'></div>
-      
-      <hr style='margin: 50px; margin-top: 200px'>
-    </center>
-    
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
+  <body class="bg-dark text-light">
+    <header class="text-center py-3">
+            <h1 id="projectTitle"></h1>
+      </header>
+        <div class="row">
+          <div class="col-md-6 container mt-4">
+            <div id="submitNewIssue" class="bg-secondary p-4 rounded">
+              <h3 class="text-center">Submit a new issue:</h3>
+              <form id="newIssue" method="post" action="/api/">
+                <div class="form-group mb-3">
+                  <input
+                    type="text"
+                    name="issue_title"
+                    placeholder="*Title"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <textarea
+                    name="issue_text"
+                    placeholder="*Text"
+                    class="form-control"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <div class="form-group mb-3">
+                  <input
+                    type="text"
+                    name="created_by"
+                    placeholder="*Created by"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <input
+                    type="text"
+                    name="assigned_to"
+                    placeholder="(opt)Assigned to"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <input
+                    type="text"
+                    name="status_text"
+                    placeholder="(opt)Status text"
+                    class="form-control"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Submit Issue
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6 container mt-4">
+              <div id="issueDisplay" class="mt-4"></div>
+            </div>
+          </div>
+        </div>
+    <footer class="text-center mt-4 foot">
+      <p>
+        Quiz by <a href="https://www.freecodecamp.org/">freeCodeCamp</a><br />
+        Coded by <a href="https://github.com/agmt92">agmt92</a>
+      </p>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-2.2.1.min.js"
+      integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+      crossorigin="anonymous"
+    ></script>
     <script>
-      $(function() {
-        let currentProject = window.location.pathname.replace(/\//g, "");;
-        let url = "/api/issues/"+currentProject;
-        $('#projectTitle').text('All issues for: '+currentProject)
+      $(function () {
+        let currentProject = window.location.pathname.replace(/\//g, "");
+        let url = "/api/issues/" + currentProject;
+        $("#projectTitle").text("All issues for: " + currentProject);
         $.ajax({
           type: "GET",
           url: url,
-          success: function(data)
-          {
-            let issues= [];
-            data.forEach(function(ele) {
+          success: function (data) {
+            let issues = [];
+            data.forEach(function (ele) {
               console.log(ele);
               let openstatus;
-              (ele.open) ? openstatus = 'open' : openstatus = 'closed';
+              ele.open ? (openstatus = "open") : (openstatus = "closed");
               let single = [
-                '<div class="issue '+openstatus+'">',
-                '<p class="id">id: '+ele._id+'</p>',
-                '<h3>'+ele.issue_title+' -  ('+openstatus+')</h3>',
-                '<br>',
-                '<p>'+ele.issue_text+'</p>',
-                '<p>'+ele.status_text+'</p>',
-                '<br>',
-                '<p class="id"><b>Created by:</b> '+ele.created_by+'  <b>Assigned to:</b> '+ele.assigned_to,
-                '<p class="id"><b>Created on:</b> '+ele.created_on+'  <b>Last updated:</b> '+ele.updated_on,
-                '<br><a href="#" class="closeIssue" id="'+ele._id+'">close?</a> <a href="#" class="deleteIssue" id="'+ele._id+'">delete?</a>',
-                '</div>'
-                
+                '<div class="issue ' + openstatus + ' bg-dark text-light p-3 mb-3 rounded">',
+                '<p class="id">id: ' + ele._id + "</p>",
+                "<h3>" + ele.issue_title + " -  (" + openstatus + ")</h3>",
+                "<br>",
+                "<p>" + ele.issue_text + "</p>",
+                "<p>" + ele.status_text + "</p>",
+                '<br><p class="id"><b>Created by:</b> ' + ele.created_by + "  <b>Assigned to:</b> " + ele.assigned_to + "</p>",
+                '<p class="id"><b>Created on:</b> ' + ele.created_on + "  <b>Last updated:</b> " + ele.updated_on + "</p>",
+                '<br><a href="#" class="closeIssue btn btn-warning btn-sm" id="' + ele._id + '">close?</a> <a href="#" class="deleteIssue btn btn-danger btn-sm" id="' + ele._id + '">delete?</a>',
+                "</div>",
               ];
-              issues.push(single.join(''));
+              issues.push(single.join(""));
             });
-            $('#issueDisplay').html(issues.join(''));
-          }
+            $("#issueDisplay").html(issues.join(""));
+          },
         });
-        
-        $('#newIssue').submit(function(e){
+
+        $("#newIssue").submit(function (e) {
           e.preventDefault();
-          $(this).attr('action', "/api/issues/" + currentProject);
+          $(this).attr("action", "/api/issues/" + currentProject);
           $.ajax({
             type: "POST",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { window.location.reload(true); }
+            success: function (data) {
+              window.location.reload(true);
+            },
           });
         });
-        
-        $('#issueDisplay').on('click','.closeIssue', function(e) {
-          let url = "/api/issues/"+currentProject;
+
+        $("#issueDisplay").on("click", ".closeIssue", function (e) {
+          let url = "/api/issues/" + currentProject;
           $.ajax({
             type: "PUT",
             url: url,
-            data: {_id: $(this).attr('id'), open: false},
-            success: function(data) { alert(data); window.location.reload(true); }
+            data: { _id: $(this).attr("id"), open: false },
+            success: function (data) {
+              alert(data);
+              window.location.reload(true);
+            },
           });
           e.preventDefault();
         });
-        $('#issueDisplay').on('click','.deleteIssue', function(e) {
-          let url = "/api/issues/"+currentProject;
+        $("#issueDisplay").on("click", ".deleteIssue", function (e) {
+          let url = "/api/issues/" + currentProject;
           $.ajax({
             type: "DELETE",
             url: url,
-            data: {_id: $(this).attr('id')},
-            success: function(data) { alert(data); window.location.reload(true); }
+            data: { _id: $(this).attr("id") },
+            success: function (data) {
+              alert(data);
+              window.location.reload(true);
+            },
           });
           e.preventDefault();
         });
       });
-   </script>
+    </script>
   </body>
 </html>
