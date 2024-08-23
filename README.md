@@ -1,6 +1,6 @@
 # Issue Tracker
 
-This project is the first exam of the freeCodeCamp Quality Assurance curriculum. It is an issue tracker application built using Node.js, Express, and MongoDB. The application allows users to create, read, update, and delete issues for different projects.
+This project is the second exam of the freeCodeCamp Quality Assurance curriculum. It is an issue tracker application built using Node.js, Express, and MongoDB. The application allows users to create, read, update, and delete issues for different projects.
 
 You can view the live demo of the project [here](https://tranquil-bayou-97588-ed0d7e6ffb37.herokuapp.com/).
 
